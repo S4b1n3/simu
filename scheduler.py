@@ -13,6 +13,7 @@ class Scheduler(ABC):
         set_remaining_time = []
         imminent_components = []
         while self._global_time_advancement <= self._end_time:
+            print("------------------------------\n")
             print("t = " + str(self._global_time_advancement))
             for c in self._component_set:
                 set_remaining_time.append(c.remaining_time)
@@ -27,11 +28,15 @@ class Scheduler(ABC):
             for c in imminent_components:
                 c.state.output_method()
             for c in self._component_set:
-                if c in imminent_components and not c.inputs:
+                input_empty = True
+                for v in c.inputs.values():
+                    if v is not None:
+                        input_empty = False
+                if c in imminent_components and input_empty:
                     c.state.intern_transition()
                     c.time_update_internal_transition(self._global_time_advancement)
 
-                elif c not in imminent_components and c.inputs:
+                elif c not in imminent_components and not input_empty:
                     c.state.extern_transition()
                     c.time_update_internal_transition(self._global_time_advancement)
                     '''
@@ -39,7 +44,7 @@ class Scheduler(ABC):
                     '''
                     c.time_update_internal_transition(self._global_time_advancement)
                     
-                elif c in imminent_components and c.inputs:
+                elif c in imminent_components and not input_empty:
                     # c.conflict()
                     c.state.extern_transition()
                     '''

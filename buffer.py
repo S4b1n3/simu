@@ -29,7 +29,7 @@ class Buf_a(State):
         State.__init__(self, event_time, component)
 
     def extern_transition(self):
-        if self.component.inputs["job"]:
+        if self.component.inputs["job"] is not None:
             self.component.nb_jobs = self.component.nb_jobs + 1
             self.component.transition_to(Buf_b(0, self.component))
         print("q = " + str(self.component.nb_jobs))
@@ -58,7 +58,7 @@ class Buf_b(State):
         self.component.ports["req"].update()
 
     def extern_transition(self):
-        if self.component.inputs["job"]:
+        if self.component.inputs["job"] is not None:
             self.component.nb_jobs = self.component.nb_jobs + 1
             self.component.transition_to(Buf_b(0, self.component))
         print("q = " + str(self.component.nb_jobs))
@@ -72,10 +72,10 @@ class Buf_c(State):
         State.__init__(self, event_time, component)
 
     def extern_transition(self):
-        if self.component.inputs["job"]:
+        if self.component.inputs["job"] is not None:
             self.component.nb_jobs = self.component.nb_jobs + 1
             self.component.transition_to(Buf_b(0, self.component))
-        elif self.component.inputs["done"]:
+        elif self.component.inputs["done"] is not None:
             if self.component.nb_jobs > 0:
                 self.component.transition_to(Buf_b(0, self.component))
             elif self.component.nb_jobs == 0:

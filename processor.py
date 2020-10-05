@@ -27,7 +27,7 @@ class Proc_idle(State):
         pass
 
     def extern_transition(self):
-        if self.component.inputs["req"]:
+        if self.component.inputs["req"] is not None:
             self.component.transition_to(Proc_busy(3, self.component))
 
 
