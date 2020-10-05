@@ -1,4 +1,5 @@
 from abc import ABC
+import matplotlib.pyplot as plt
 
 
 class Scheduler(ABC):
@@ -10,16 +11,24 @@ class Scheduler(ABC):
         self._component_set = components
 
     def exec(self):
-        set_remaining_time = []
-        imminent_components = []
+        points_x = []
+        points_y = []
         while self._global_time_advancement <= self._end_time:
+            set_remaining_time = []
+            imminent_components = []
+
             for c in self._component_set:
+                if type(c).__name__ == "Adder":
+                    points_x.append(self._global_time_advancement)
+                    points_y.append(c.currentSum)
                 set_remaining_time.append(c.remaining_time)
+            print(set_remaining_time)
             self._min_remaining_time = min(set_remaining_time)
             for c in self._component_set:
                 if c.remaining_time == self._min_remaining_time:
                     imminent_components.append(c)
             for i in imminent_components:
+                print("\nImminent components")
                 print(f"Component {type(i).__name__}")
                 print("Time remaining : " + str(i.remaining_time))
             self._global_time_advancement += self._min_remaining_time
@@ -31,11 +40,11 @@ class Scheduler(ABC):
             for c in imminent_components:
                 c.state.output_method()
             for c in self._component_set:
-                input_empty = False
+                input_empty = True
                 for v in c.inputs.values():
-                    if v is None:
+                    if v is not None:
                         input_empty = False
-                if c in imminent_components and (input_empty and len(c.inputs) != 0):
+                if c in imminent_components and input_empty:
                     print(f"Component {type(c).__name__} : internal transition")
                     c.state.intern_transition()
                     c.time_update_internal_transition(self._global_time_advancement)
@@ -51,6 +60,7 @@ class Scheduler(ABC):
                     
                 elif c in imminent_components and not input_empty:
                     # c.conflict()
+                    print(f"Component {type(c).__name__} : conflict")
                     c.state.extern_transition()
                     '''
                         Update tr, e, tl, tn of c component
@@ -59,3 +69,6 @@ class Scheduler(ABC):
 
             for c in self._component_set:
                 c.clean_inputs()
+
+        plt.plot(points_x, points_y)
+        plt.show()

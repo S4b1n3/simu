@@ -9,7 +9,7 @@ class Processor(Component):
         self.set_outputs("done", None)
         self.set_initial_state(Proc_idle(s0_time, self))
 
-    def clean_input(self):
+    def clean_inputs(self):
         self.set_inputs("req", None)
 
 

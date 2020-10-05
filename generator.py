@@ -18,6 +18,7 @@ class Gen_SO(State):
     def intern_transition(self):
         self.component.transition_to(Gen_SO(2, self.component))
 
+
     def extern_transition(self):
         pass
 

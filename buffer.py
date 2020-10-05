@@ -19,9 +19,13 @@ class Buffer(Component):
     def nb_jobs(self, new_value):
         self._nb_jobs = new_value
 
-    def clean_input(self):
+    def clean_inputs(self):
+        print(self._inputs)
         self._inputs["job"] = None
         self._inputs["done"] = None
+        print("new inputs")
+        print(self._inputs)
+
 
 
 class Buf_a(State):
@@ -74,7 +78,7 @@ class Buf_c(State):
     def extern_transition(self):
         if self.component.inputs["job"] is not None:
             self.component.nb_jobs = self.component.nb_jobs + 1
-            self.component.transition_to(Buf_b(0, self.component))
+            self.component.transition_to(Buf_c(math.inf, self.component))
         elif self.component.inputs["done"] is not None:
             if self.component.nb_jobs > 0:
                 self.component.transition_to(Buf_b(0, self.component))
@@ -83,7 +87,7 @@ class Buf_c(State):
         print("q = " + str(self.component.nb_jobs))
 
     def intern_transition(self):
-        pass
+        print("q = " + str(self.component.nb_jobs))
 
     def output_method(self):
         pass
