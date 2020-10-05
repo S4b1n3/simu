@@ -4,7 +4,7 @@ import math
 
 class Buffer(Component):
     def __init__(self, s0_time):
-        Component.__init__(self)
+        Component.__init__(self, s0_time)
         self._nb_jobs = 0
         self._inputs["job"] = None
         self._inputs["done"] = None

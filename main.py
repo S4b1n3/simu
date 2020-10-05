@@ -6,6 +6,8 @@ import component
 import math
 
 if __name__ == "__main__":
+    print("------------------------------\n")
+    print("t = 0")
     compo_generator = Generator(2)
     compo_buffer = Buffer(math.inf)
     compo_processor = Processor(math.inf)

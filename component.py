@@ -23,10 +23,10 @@ class Component(ABC):
     # Represents the list of ports indexed with their name
     _ports = {}
 
-    def __init__(self):
+    def __init__(self, event_time):
         self._inputs = dict()
         self._outputs = dict()
-        self._remaining_time = 0
+        self._remaining_time = event_time
         self._last_event_date = 0
         self._next_event_date = 0
         self._elapsed_time = 0

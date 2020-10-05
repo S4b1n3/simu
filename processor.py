@@ -4,7 +4,7 @@ import math
 
 class Processor(Component):
     def __init__(self, s0_time):
-        Component.__init__(self)
+        Component.__init__(self, s0_time)
         self.set_inputs("req", None)
         self.set_outputs("done", None)
         self.set_initial_state(Proc_idle(s0_time, self))

@@ -6,7 +6,7 @@ from component import Component, State, Port
 class Generator(Component):
 
     def __init__(self, s0_time):
-        Component.__init__(self)
+        Component.__init__(self, s0_time)
         self.set_outputs("job", None)
         self.set_initial_state(Gen_SO(s0_time, self))
 
