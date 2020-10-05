@@ -47,4 +47,5 @@ class Scheduler(ABC):
                     '''
                     c.time_update_internal_transition(self._global_time_advancement)
 
-                    pass
+            for c in self._component_set:
+                c.clean_inputs()

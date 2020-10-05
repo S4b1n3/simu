@@ -9,6 +9,9 @@ class Processor(Component):
         self.set_outputs("done", None)
         self.set_initial_state(Proc_idle(s0_time, self))
 
+    def clean_input(self):
+        self.set_inputs("req", None)
+
 
 class Proc_idle(State):
     def __init__(self, event_time, component: Component):
@@ -25,7 +28,7 @@ class Proc_idle(State):
 
     def extern_transition(self):
         if self.component.inputs["req"]:
-            self.component.transition_to(Proc_busy(2, self.component))
+            self.component.transition_to(Proc_busy(3, self.component))
 
 
 class Proc_busy(State):

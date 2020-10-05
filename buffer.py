@@ -19,6 +19,10 @@ class Buffer(Component):
     def nb_jobs(self, new_value):
         self._nb_jobs = new_value
 
+    def clean_input(self):
+        self._inputs["job"] = None
+        self._inputs["done"] = None
+
 
 class Buf_a(State):
     def __init__(self, event_time, component: Component):

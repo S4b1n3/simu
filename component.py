@@ -44,16 +44,17 @@ class Component(ABC):
         self._state = state
         self._state.component = self
 
-
-    def set_initial_state(self, init_state : State) -> None:
+    def set_initial_state(self, init_state: State) -> None:
         self._state = init_state
-
 
     def time_update_internal_transition(self, t):
         self.remaining_time = self.state.time
         self.elapsed_time = 0
         self.last_event_date = t
         self.next_event_date = t + self.state.time
+
+    def clean_inputs(self):
+        self._inputs = {}
 
     @property
     def ports(self):
@@ -142,7 +143,7 @@ class State(ABC):
     def __init__(self, state_time, component):
         self._component = component
         self._time = state_time
-        #self.component.remaining_time = state_time
+        # self.component.remaining_time = state_time
         self.elapsed_time = 0
 
     @abstractmethod

@@ -11,6 +11,8 @@ class Generator(Component):
         self.set_initial_state(Gen_SO(s0_time, self))
 
 
+
+
 class Gen_SO(State):
     def __init__(self, event_time, component):
         State.__init__(self, event_time, component)
@@ -27,3 +29,5 @@ class Gen_SO(State):
 
     def time_advance(self):
         pass
+
+
