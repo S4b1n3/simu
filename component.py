@@ -147,7 +147,7 @@ class State(ABC):
         self.elapsed_time = 0
 
     def conflict(self):
-        self.intern_transition()
+        self.extern_transition()
 
     @abstractmethod
     def intern_transition(self):

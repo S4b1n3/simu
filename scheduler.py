@@ -14,24 +14,30 @@ class Scheduler(ABC):
         points_x = []
         points_y = []
         points_y_Int = []
+        points_y_EventInt = []
         iter = 0
         while self._global_time_advancement <= self._end_time:
             iter = iter + 1
             set_remaining_time = []
             imminent_components = []
 
-            '''
+
             for c in self._component_set:
-                c.clean_inputs()'''
+                if type(c).__name__ == "Processor" or type(c).__name__ == "Generator" or type(c).__name__ == "Buffer":
+                    c.clean_inputs()
 
             for c in self._component_set:
                 if type(c).__name__ == "Adder":
                     points_x.append(self._global_time_advancement)
                     #points_y.append(c.outputs["sum"])
+                    print("Adder CurrentSum",c.currentSum)
                     points_y.append(c.currentSum)
                 if type(c).__name__ == "Integrator":
                     points_y_Int.append(c.x)
                     print("Integrator inputs : ",c.inputs)
+                if type(c).__name__ == "EventIntegrator":
+                    points_y_EventInt.append(c.q)
+                    print("EventIntegrator inputs : ", c.inputs)
                 set_remaining_time.append(c.remaining_time)
             print(set_remaining_time)
             self._min_remaining_time = min(set_remaining_time)
@@ -83,5 +89,10 @@ class Scheduler(ABC):
                 pass
 
         plt.plot(points_x, points_y)
-        plt.plot(points_x, points_y_Int)
+        if points_y_Int:
+            print("test plot 1")
+            plt.plot(points_x, points_y_Int)
+        if points_y_EventInt :
+            print("test plot 2")
+            plt.plot(points_x, points_y_EventInt)
         plt.show()
