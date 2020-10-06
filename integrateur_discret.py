@@ -26,7 +26,7 @@ class S(State):
 
     def extern_transition(self):
         if self.component.inputs["sum"] is not None:
-            self.component.x = self.component.inputs["sum"]
+            self.component.dx = self.component.inputs["sum"]
 
     def output_method(self):
         self.component.set_outputs("sx", self.component.x)
@@ -34,3 +34,7 @@ class S(State):
 
     def time_advance(self):
         pass
+
+    def conflict(self):
+        print("intern transition")
+        self.intern_transition()

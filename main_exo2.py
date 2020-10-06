@@ -40,13 +40,10 @@ if __name__ == "__main__":
     adder.set_port(port2.name, port2)
     adder.set_port(port_sum.name, port_sum)
 
-
-
-
     integrator.set_port(port_sum.name, port_sum)
     integrator.set_port(port_inte_out.name, port_inte_out)
 
-    launch_test = Scheduler(component.components, 6)
+    launch_test = Scheduler(component.components, 2)
 
     launch_test.exec()
 

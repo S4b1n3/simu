@@ -48,6 +48,7 @@ class First_state(State):
         self.component.transition_to(Second_state(self.component.timeBeforeStep, self.component))
 
     def output_method(self):
+        print("OUTPUT METHOD STEP")
         self.component.set_outputs(self.component.myOutput, self.component.xi)
         self.component.ports[self.component.myOutput].update()
 

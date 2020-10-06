@@ -4,7 +4,7 @@ import math
 
 class Adder(Component):
     def __init__(self, s0_time):
-        Component.__init__(self, s0_time)
+        Component.__init__(self, math.inf)
         self._inputs["01"] = None
         self._inputs["02"] = None
         self._inputs["03"] = None
@@ -57,6 +57,7 @@ class Send(State):
         self.component.transition_to(Get(math.inf, self.component))
 
     def output_method(self):
+        self.component.currentSum = 0
         print(self.component.inputs)
         if self.component.inputs["01"] is not None:
             self.component.currentSum = self.component.currentSum + self.component.inputs["01"]
@@ -66,7 +67,9 @@ class Send(State):
             self.component.currentSum = self.component.currentSum + self.component.inputs["03"]
         if self.component.inputs["04"] is not None:
             self.component.currentSum = self.component.currentSum + self.component.inputs["04"]
+
         self.component.set_outputs("sum", self.component.currentSum)
+        print(self.component.outputs)
         self.component.ports["sum"].update()
 
     def extern_transition(self):
@@ -74,3 +77,6 @@ class Send(State):
 
     def time_advance(self):
         pass
+
+    def conflict(self):
+        self.intern_transition()

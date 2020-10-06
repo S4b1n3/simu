@@ -146,6 +146,9 @@ class State(ABC):
         # self.component.remaining_time = state_time
         self.elapsed_time = 0
 
+    def conflict(self):
+        self.intern_transition()
+
     @abstractmethod
     def intern_transition(self):
         pass
